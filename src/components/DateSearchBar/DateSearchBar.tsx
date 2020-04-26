@@ -3,12 +3,14 @@ import { ReactComponent as CalenderIcon } from '../../assets/images/icon_calende
 import { ReactComponent as SearchIcon } from '../../assets/images/icon_search.svg';
 
 import defaultClasses from './DateSearchBar.module.scss';
+import SimpleButton from '../Buttons/SimpleButton';
 
 export interface DateSearchBarProps {
   classNames?: {
     DateSearchBar?: string;
     input?: string;
     icon?: string;
+    buttonIcon?: string;
   };
   section?: 'left' | 'right';
   showIcon?: boolean;
@@ -20,21 +22,26 @@ const DateSearchBar: React.SFC<DateSearchBarProps> = (props) => {
     defaultClasses.DateSearchBar,
     ...(section === 'left' ? [defaultClasses.DateSearchBarLeft] : []),
     ...(section === 'right' ? [defaultClasses.DateSearchBarRight] : []),
-    ...(classNames && classNames!.DateSearchBar ? [classNames!.DateSearchBar] : []),
+    ...(classNames && classNames!.DateSearchBar ? [classNames!.DateSearchBar] : [])
   ].join(' ');
 
   const inputClasses = [
     defaultClasses.input,
-    ...(classNames && classNames!.input ? [classNames!.input] : []),
+    ...(classNames && classNames!.input ? [classNames!.input] : [])
   ].join(' ');
 
   const iconClasses = [
     defaultClasses.icon,
-    ...(classNames && classNames!.icon ? [classNames!.icon] : []),
+    ...(classNames && classNames!.icon ? [classNames!.icon] : [])
+  ].join(' ');
+
+  const buttonIconClasses = [
+    defaultClasses.buttonIcon,
+    ...(classNames && classNames!.buttonIcon ? [classNames!.buttonIcon] : [])
   ].join(' ');
 
   return (
-    <>
+    <div className='flex'>
       <div className={DateSearchBarClass}>
         {showIcon ? <CalenderIcon className={iconClasses} /> : null}
         <div className={defaultClasses.calenderInputDiv}>
@@ -45,15 +52,15 @@ const DateSearchBar: React.SFC<DateSearchBarProps> = (props) => {
           <input className={inputClasses} type='date' />
         </div>
       </div>
-      <button>
-        <SearchIcon />
-      </button>
-    </>
+      <SimpleButton section='right'>
+        <SearchIcon className={buttonIconClasses} />
+      </SimpleButton>
+    </div>
   );
 };
 
 DateSearchBar.defaultProps = {
-  showIcon: true,
+  showIcon: true
 };
 
 export default DateSearchBar;
