@@ -24,13 +24,12 @@
 
 .emptyMails {
   flex: 1 1 auto;
+  position: relative;
 }
 
 .logoClass {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 10rem auto;
+  display: block;
 }
 
 .header {
