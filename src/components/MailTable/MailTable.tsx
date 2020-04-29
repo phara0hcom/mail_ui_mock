@@ -2,22 +2,23 @@ import React from 'react';
 import defaultClasses from './MailTable.module.scss';
 
 import logoImg from '../../assets/images/logo.png';
+import MaxLengthCell from './MaxLengthCell';
+import ToCell from './ToCell';
+import DateCell from './DateCell';
 
-export interface MailObj {
-  from: string;
-  to: [string];
-  subject: string;
-  date: number;
-}
+export type MailObj = { from: string; to: string[]; subject: string; date: number };
+
+export type MailArr = Array<MailObj>;
 
 export interface MailTableProps {
-  mails: [MailObj] | [];
+  mails: MailArr | [];
 }
 
 const MailTable: React.SFC<MailTableProps> = (props) => {
   const { mails } = props;
   const {
     header,
+    headerItem,
     table,
     status,
     emptyMails,
@@ -38,20 +39,28 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
       {mails.length > 0 ? (
         <table className={table}>
           <thead>
-            <tr>
-              <th className={header}>From</th>
-              <th className={header}>To</th>
-              <th className={header}>Subject</th>
-              <th className={header}>Date</th>
+            <tr className={header}>
+              <th className={headerItem}>From</th>
+              <th className={headerItem}>To</th>
+              <th className={headerItem}>Subject</th>
+              <th className={headerItem}>Date</th>
             </tr>
           </thead>
           <tbody>
             {(mails as Array<MailObj>).map((el: MailObj, index: number) => (
               <tr key={`mailTableRow${index}`}>
-                <td className={fromCell}>{el.from}</td>
-                <td className={toCell}>{el.to}</td>
-                <td className={subjectCell}>{el.subject}</td>
-                <td className={dateCell}>{el.date}</td>
+                <td className={fromCell}>
+                  <MaxLengthCell cellValue={el.from} maxLength={13} />
+                </td>
+                <td className={toCell}>
+                  <ToCell maxLength={13} cellValues={el.to} />
+                </td>
+                <td className={subjectCell}>
+                  <MaxLengthCell cellValue={el.subject} maxLength={60} />
+                </td>
+                <td className={dateCell}>
+                  <DateCell date={el.date} />
+                </td>
               </tr>
             ))}
           </tbody>

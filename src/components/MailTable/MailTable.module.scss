@@ -11,14 +11,14 @@
 .status {
   flex: 0 0 auto;
   color: #666666;
-  font-size: 1rem;
+  font-size: 1.6rem;
   font-weight: 700;
   border-bottom: 2px solid #efefef;
   padding-bottom: 1rem;
 }
 
 .statusNumber {
-  font-size: 1.3rem;
+  font-size: 2rem;
   letter-spacing: 1px;
 }
 
@@ -33,4 +33,19 @@
 }
 
 .header {
+  border-top: solid 2px #eaeaea;
+  border-bottom: solid 2px #eaeaea;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.fromCell,
+.toCell,
+.subjectCell,
+.dateCell {
+  font-size: 1.8rem;
+}
+
+.dateCell {
+  font-weight: 700;
 }

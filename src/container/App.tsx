@@ -3,6 +3,7 @@ import DateSearchBar from '../components/DateSearchBar/DateSearchBar';
 
 import './App.css';
 import MailTable from '../components/MailTable/MailTable';
+import { mockMails } from '../mock/mails';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <DateSearchBar section='left' />
       </header>
       <section className='sectionMail'>
-        <MailTable mails={[]} />
+        <MailTable mails={mockMails()} />
       </section>
     </div>
   );
