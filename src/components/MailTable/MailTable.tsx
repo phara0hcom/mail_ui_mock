@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import MaxLengthCell from './MaxLengthCell';
 import ToCell from './ToCell';
@@ -11,6 +11,7 @@ import { ReactComponent as ArrowNextIcon } from '../../assets/images/icon_arrow0
 import { ReactComponent as AttachIcon } from '../../assets/images/icon_clip.svg';
 
 import defaultClasses from './MailTable.module.scss';
+import ShowTemporaryBody from './ShowTemporaryBody';
 
 export type MailObj = {
   from: string;
@@ -27,11 +28,32 @@ type SortTypes = 'from' | 'to' | 'subject' | 'date';
 export interface MailTableProps {
   mails: MailArr | [];
 }
+let loaded = false;
 
 const MailTable: React.SFC<MailTableProps> = (props) => {
+  const { mails } = props;
+  const [showBody, setShowBody] = useState([] as boolean[]);
+
+  useEffect(() => {
+    if (!loaded && mails.length > 0) {
+      const newShowBody: boolean[] = [];
+      mails.forEach((el, index) => {
+        newShowBody.push(showBody[index] ?? false);
+      });
+      setShowBody(newShowBody);
+      loaded = true;
+    }
+  }, [mails, showBody]);
+
+  useEffect(() => {
+    return () => {
+      loaded = false;
+    };
+  }, []);
+
   const [sortBy, setSortBy] = useState('date');
   const [sortByDir, setSortByDir] = useState('des');
-  const { mails } = props;
+
   const {
     table,
     selected,
@@ -48,7 +70,9 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
     subjectCell,
     attachIcon,
     dateCell,
-    nextIcon
+    nextIcon,
+    bodyText,
+    showBodyText
   } = defaultClasses;
 
   const onSortBy = (sortHeader: SortTypes) => () => {
@@ -58,6 +82,13 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
       setSortBy(sortHeader);
       setSortByDir('dec');
     }
+  };
+
+  const onShowBody = (index: number) => () => {
+    const newShowBody = [...showBody];
+    newShowBody[index] = !newShowBody[index];
+
+    setShowBody(newShowBody);
   };
 
   const sortArrowClass = sortByDir === 'dec' ? arrowDown : arrowUp;
@@ -97,23 +128,32 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
           </thead>
           <tbody>
             {(mails as Array<MailObj>).map((el: MailObj, index: number) => (
-              <tr key={`mailTableRow${index}`}>
-                <MailIcon className={mailIcon} />
-                <td className={fromCell}>
-                  <MaxLengthCell cellValue={el.from} maxLength={13} />
-                </td>
-                <td className={toCell}>
-                  <ToCell maxLength={13} cellValues={el.to} />
-                </td>
-                <td className={subjectCell}>
-                  <MaxLengthCell cellValue={el.subject} maxLength={60} />
-                  {el.hasAttachment ? <AttachIcon className={attachIcon} /> : null}
-                </td>
-                <td className={dateCell}>
-                  <DateCell date={el.date} />
-                  <ArrowNextIcon className={nextIcon} />
-                </td>
-              </tr>
+              <React.Fragment key={`mailTableRow${index}`}>
+                <tr onClick={onShowBody(index)}>
+                  <MailIcon className={mailIcon} />
+                  <td colSpan={1} className={fromCell}>
+                    <MaxLengthCell cellValue={el.from} maxLength={13} />
+                  </td>
+                  <td colSpan={1} className={toCell}>
+                    <ToCell maxLength={13} cellValues={el.to} />
+                  </td>
+                  <td colSpan={1} className={subjectCell}>
+                    <MaxLengthCell cellValue={el.subject} maxLength={60} />
+                    {el.hasAttachment ? <AttachIcon className={attachIcon} /> : null}
+                  </td>
+                  <td colSpan={1} className={dateCell}>
+                    <div>
+                      <DateCell date={el.date} />
+                    </div>
+                    <ArrowNextIcon className={nextIcon} />
+                  </td>
+                </tr>
+                <tr className={[bodyText, ...(showBody[index] ? [showBodyText] : [])].join(' ')}>
+                  <td colSpan={4}>
+                    <ShowTemporaryBody />
+                  </td>
+                </tr>
+              </React.Fragment>
             ))}
           </tbody>
         </table>

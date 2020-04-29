@@ -80,6 +80,22 @@ table.table thead th {
   user-select: none;
 }
 
+table.table tr.bodyText {
+  display: none;
+  max-height: 0;
+  cursor: default;
+  transition: max-height 0.5s ease-out;
+}
+
+table.table tr.showBodyText {
+  height: auto;
+  display: table-row;
+  max-height: 600px;
+  &:hover {
+    background-color: #fff;
+  }
+}
+
 .selected {
   color: #000;
 }
@@ -100,7 +116,7 @@ table.table thead th {
 
 .nextIcon {
   width: 0.8rem;
-  margin-left: 1rem;
+  margin: 0 0 0 1rem;
 }
 
 .fromCell,
@@ -168,5 +184,13 @@ table.table thead th {
     font-weight: normal;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+  }
+
+  table.table tr.showBodyText {
+    display: block;
+    & td {
+      display: block;
+    }
   }
 }
