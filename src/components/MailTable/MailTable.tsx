@@ -6,10 +6,19 @@ import DateCell from './DateCell';
 
 import logoImg from '../../assets/images/logo.png';
 import { ReactComponent as ArrowIcon } from '../../assets/images/icon_arrow01.svg';
+import { ReactComponent as MailIcon } from '../../assets/images/icon_mail_sp.svg';
+import { ReactComponent as ArrowNextIcon } from '../../assets/images/icon_arrow02.svg';
+import { ReactComponent as AttachIcon } from '../../assets/images/icon_clip.svg';
 
 import defaultClasses from './MailTable.module.scss';
 
-export type MailObj = { from: string; to: string[]; subject: string; date: number };
+export type MailObj = {
+  from: string;
+  to: string[];
+  subject: string;
+  date: number;
+  hasAttachment?: boolean;
+};
 
 export type MailArr = Array<MailObj>;
 
@@ -32,11 +41,14 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
     emptyMails,
     statusNumber,
     tableSection,
+    mailIcon,
     logoClass,
     fromCell,
     toCell,
     subjectCell,
-    dateCell
+    attachIcon,
+    dateCell,
+    nextIcon
   } = defaultClasses;
 
   const onSortBy = (sortHeader: SortTypes) => () => {
@@ -86,6 +98,7 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
           <tbody>
             {(mails as Array<MailObj>).map((el: MailObj, index: number) => (
               <tr key={`mailTableRow${index}`}>
+                <MailIcon className={mailIcon} />
                 <td className={fromCell}>
                   <MaxLengthCell cellValue={el.from} maxLength={13} />
                 </td>
@@ -94,9 +107,11 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
                 </td>
                 <td className={subjectCell}>
                   <MaxLengthCell cellValue={el.subject} maxLength={60} />
+                  {el.hasAttachment ? <AttachIcon className={attachIcon} /> : null}
                 </td>
                 <td className={dateCell}>
                   <DateCell date={el.date} />
+                  <ArrowNextIcon className={nextIcon} />
                 </td>
               </tr>
             ))}

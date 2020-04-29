@@ -39,6 +39,8 @@ const subjectList = [
   '[info:888] ABC EQUIPMENT COMPANY'
 ];
 
+const attachmentList = [false, false, true, false, false, false, false, true, true, false];
+
 const dateFunc: Array<{ amount: number; chunk: dayjs.OpUnitType }> = [
   { amount: 10, chunk: 'minute' },
   { amount: 20, chunk: 'minute' },
@@ -60,7 +62,8 @@ export const mockMails = (arrLength = 10): Array<MailObj> => {
       from: fromList[i],
       to: toList[i],
       subject: subjectList[i],
-      date: dayjs().subtract(dateFunc[i].amount, dateFunc[i].chunk).unix()
+      date: dayjs().subtract(dateFunc[i].amount, dateFunc[i].chunk).unix(),
+      ...(attachmentList[i] ? { hasAttachment: true } : {})
     });
   }
 

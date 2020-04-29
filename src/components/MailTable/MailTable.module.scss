@@ -46,11 +46,20 @@ table.table {
   display: table;
   border-spacing: 0;
   border-collapse: collapse;
+  @media only screen and (max-width: 37.5em) {
+    //600px
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 table.table tr {
   outline: 0;
   vertical-align: middle;
+  cursor: pointer;
+  &:hover {
+    background-color: #f6f8fa;
+  }
 }
 
 table.table th,
@@ -74,6 +83,25 @@ table.table thead th {
 .selected {
   color: #000;
 }
+.subjectCell {
+  display: flex;
+}
+.attachIcon {
+  width: 2rem;
+  margin-left: 1rem;
+}
+
+.mailIcon,
+.nextIcon {
+  width: 2rem;
+  display: none;
+  margin: 1rem auto 0;
+}
+
+.nextIcon {
+  width: 0.8rem;
+  margin-left: 1rem;
+}
 
 .fromCell,
 .toCell,
@@ -84,4 +112,61 @@ table.table thead th {
 
 .dateCell {
   font-weight: 700;
+}
+
+@media only screen and (max-width: 37.5em) {
+  .fromCell {
+    display: flex;
+  }
+  table.table {
+    & tbody {
+      display: flex;
+      flex-direction: column;
+
+      & tr {
+        display: grid;
+        grid-template-columns: 3rem auto 14.5rem;
+        grid-template-rows: auto;
+        grid-template-areas:
+          'icon from date'
+          'icon to to'
+          'subject subject subject';
+        border-bottom: 1px solid #eee;
+        padding: 1rem;
+        cursor: pointer;
+      }
+    }
+
+    & td {
+      border: none;
+      padding: 0 1rem;
+    }
+  }
+
+  .mailIcon,
+  .nextIcon {
+    display: block;
+    grid-area: icon;
+  }
+
+  .fromCell {
+    grid-area: from;
+    font-weight: 700;
+  }
+
+  .toCell {
+    grid-area: to;
+  }
+
+  .subjectCell {
+    grid-area: subject;
+  }
+
+  .dateCell {
+    grid-area: date;
+    text-align: right;
+    font-weight: normal;
+    display: flex;
+    justify-content: flex-end;
+  }
 }

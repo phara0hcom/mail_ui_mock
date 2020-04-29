@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from '../../assets/images/icon_search.sv
 
 import defaultClasses from './DateSearchBar.module.scss';
 import SimpleButton from '../Buttons/SimpleButton';
+import dayjs from 'dayjs';
 
 export interface DateSearchBarProps {
   classNames?: {
@@ -40,16 +41,19 @@ const DateSearchBar: React.SFC<DateSearchBarProps> = (props) => {
     ...(classNames && classNames!.buttonIcon ? [classNames!.buttonIcon] : [])
   ].join(' ');
 
+  const now = dayjs().format('YYYY-MM-DD');
+  const from = dayjs().subtract(2, 'year').startOf('month').format('YYYY-MM-DD');
+
   return (
     <div className='flex'>
       <div className={DateSearchBarClass}>
         {showIcon ? <CalenderIcon className={iconClasses} /> : null}
         <div className={defaultClasses.calenderInputDiv}>
-          <input className={inputClasses} type='date' />
+          <input className={inputClasses} value={from} type='date' />
         </div>
         <div className={defaultClasses.divider}>-</div>
         <div className={defaultClasses.calenderInputDiv}>
-          <input className={inputClasses} type='date' />
+          <input className={inputClasses} value={now} type='date' />
         </div>
       </div>
       <SimpleButton section='right'>
