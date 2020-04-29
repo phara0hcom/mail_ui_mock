@@ -49,14 +49,14 @@ const DateSearchBar: React.SFC<DateSearchBarProps> = (props) => {
       <div className={DateSearchBarClass}>
         {showIcon ? <CalenderIcon className={iconClasses} /> : null}
         <div className={defaultClasses.calenderInputDiv}>
-          <input className={inputClasses} value={from} type='date' />
+          <input className={inputClasses} value={from} type='date' alt='From Date' />
         </div>
         <div className={defaultClasses.divider}>-</div>
         <div className={defaultClasses.calenderInputDiv}>
-          <input className={inputClasses} value={now} type='date' />
+          <input className={inputClasses} value={now} type='date' alt='From Date' />
         </div>
       </div>
-      <SimpleButton section='right'>
+      <SimpleButton title='Search Button' section='right'>
         <SearchIcon className={buttonIconClasses} />
       </SimpleButton>
     </div>
