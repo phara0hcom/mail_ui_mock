@@ -25,7 +25,7 @@ Make the website accessible for people with disabilities. And add styling for on
 - Add a select colum in web view and a hold/swipe to select in mobile
 - On hover show more information that is hidden
 - Add show all and hide all button to show and hide the body text
+- Use Redux to store the mails and store the show state in there as well.
 
 ## Testing
-
 Add testing for the logic and the rendering of all the components.
