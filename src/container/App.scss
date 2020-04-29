@@ -2,8 +2,11 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-  max-width: 108rem;
+  width: 108rem;
   margin: 0 auto;
+  @media only screen and (max-width: 56.25em) {
+    width: 100%;
+  }
 }
 
 .section {
