@@ -124,6 +124,14 @@ table.table tr.showBodyText {
 }
 .subjectCell {
   display: flex;
+  & > .subjectText {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    white-space: nowrap;
+  }
 }
 .attachIcon {
   width: 2rem;

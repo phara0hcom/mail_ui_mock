@@ -139,7 +139,7 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
                   <td className={[fromCell, classes.fromRow].join(' ')}>{el.from}</td>
                   <td className={[toCell, classes.toRow].join(' ')}>{el.to.join(', ')}</td>
                   <td className={[subjectCell, classes.subjectRow].join(' ')}>
-                    {el.subject}
+                    <div className={classes.subjectText}>{el.subject}</div>
                     {el.hasAttachment ? <AttachIcon className={attachIcon} /> : null}
                   </td>
                   <td className={[dateCell, classes.dateRow].join(' ')}>
