@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import MaxLengthCell from './MaxLengthCell';
-import ToCell from './ToCell';
 import DateCell from './DateCell';
 
 import logoImg from '../../assets/images/logo.png';
@@ -10,7 +8,7 @@ import { ReactComponent as MailIcon } from '../../assets/images/icon_mail_sp.svg
 import { ReactComponent as ArrowNextIcon } from '../../assets/images/icon_arrow02.svg';
 import { ReactComponent as AttachIcon } from '../../assets/images/icon_clip.svg';
 
-import defaultClasses from './MailTable.module.scss';
+import classes from './MailTable.module.scss';
 import ShowTemporaryBody from './ShowTemporaryBody';
 
 export type MailObj = {
@@ -73,7 +71,7 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
     nextIcon,
     bodyText,
     showBodyText
-  } = defaultClasses;
+  } = classes;
 
   const onSortBy = (sortHeader: SortTypes) => () => {
     if (sortBy === sortHeader) {
@@ -104,21 +102,28 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
           <thead>
             <tr>
               <th
+                className={classes.fromRow}
                 onClick={onSortBy('from')}
                 {...(sortBy === 'from' ? { className: selected } : {})}
               >
                 From {sortBy === 'from' ? sortArrow : null}
               </th>
-              <th onClick={onSortBy('to')} {...(sortBy === 'to' ? { className: selected } : {})}>
+              <th
+                className={classes.toRow}
+                onClick={onSortBy('to')}
+                {...(sortBy === 'to' ? { className: selected } : {})}
+              >
                 To {sortBy === 'to' ? sortArrow : null}
               </th>
               <th
+                className={classes.subjectRow}
                 onClick={onSortBy('subject')}
                 {...(sortBy === 'subject' ? { className: selected } : {})}
               >
                 Subject {sortBy === 'subject' ? sortArrow : null}
               </th>
               <th
+                className={classes.dateRow}
                 onClick={onSortBy('date')}
                 {...(sortBy === 'date' ? { className: selected } : {})}
               >
@@ -131,17 +136,13 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
               <React.Fragment key={`mailTableRow${index}`}>
                 <tr onClick={onShowBody(index)}>
                   <MailIcon className={mailIcon} />
-                  <td colSpan={1} className={fromCell}>
-                    <MaxLengthCell cellValue={el.from} maxLength={13} />
-                  </td>
-                  <td colSpan={1} className={toCell}>
-                    <ToCell maxLength={13} cellValues={el.to} />
-                  </td>
-                  <td colSpan={1} className={subjectCell}>
-                    <MaxLengthCell cellValue={el.subject} maxLength={60} />
+                  <td className={[fromCell, classes.fromRow].join(' ')}>{el.from}</td>
+                  <td className={[toCell, classes.toRow].join(' ')}>{el.to.join(', ')}</td>
+                  <td className={[subjectCell, classes.subjectRow].join(' ')}>
+                    {el.subject}
                     {el.hasAttachment ? <AttachIcon className={attachIcon} /> : null}
                   </td>
-                  <td colSpan={1} className={dateCell}>
+                  <td className={[dateCell, classes.dateRow].join(' ')}>
                     <div>
                       <DateCell date={el.date} />
                     </div>
