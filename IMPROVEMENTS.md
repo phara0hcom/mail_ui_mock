@@ -19,7 +19,7 @@ Make the website accessible for people with disabilities. And add styling for on
 ## e-mail table
 
 - Have a loading state where similar to the how I styled the body text I would show a list of emails with no info until the info is loaded then show the actual emails
-- Make the table actually responsive and not so that text would cut off similar to the design mock
+- ~~Make the table actually responsive and not so that text would cut off similar to the design mock~~
 - Make sure all columns are actually sorted on click
 - Add different views similar to g-mail's display density
 - Add a select colum in web view and a hold/swipe to select in mobile
@@ -28,4 +28,5 @@ Make the website accessible for people with disabilities. And add styling for on
 - Use Redux to store the mails and store the show state in there as well.
 
 ## Testing
+
 Add testing for the logic and the rendering of all the components.
