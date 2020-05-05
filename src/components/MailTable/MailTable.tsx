@@ -52,27 +52,6 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
   const [sortBy, setSortBy] = useState('date');
   const [sortByDir, setSortByDir] = useState('des');
 
-  const {
-    table,
-    selected,
-    arrowDown,
-    arrowUp,
-    status,
-    emptyMails,
-    statusNumber,
-    tableSection,
-    mailIcon,
-    logoClass,
-    fromCell,
-    toCell,
-    subjectCell,
-    attachIcon,
-    dateCell,
-    nextIcon,
-    bodyText,
-    showBodyText
-  } = classes;
-
   const onSortBy = (sortHeader: SortTypes) => () => {
     if (sortBy === sortHeader) {
       setSortByDir(sortByDir === 'dec' ? 'ase' : 'dec');
@@ -89,43 +68,43 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
     setShowBody(newShowBody);
   };
 
-  const sortArrowClass = sortByDir === 'dec' ? arrowDown : arrowUp;
+  const sortArrowClass = sortByDir === 'dec' ? classes.arrowDown : classes.arrowUp;
   const sortArrow = <ArrowIcon className={sortArrowClass} />;
 
   return (
-    <div className={tableSection}>
-      <div className={['sectionWithP', status].join(' ')}>
-        Results: <span className={statusNumber}>{mails.length}</span>mail(s)
+    <div className={classes.tableSection}>
+      <div className={['sectionWithP', classes.status].join(' ')}>
+        Results: <span className={classes.statusNumber}>{mails.length}</span>mail(s)
       </div>
       {mails.length > 0 ? (
-        <table className={table}>
+        <table className={classes.table}>
           <thead>
             <tr>
               <th
                 className={classes.fromRow}
                 onClick={onSortBy('from')}
-                {...(sortBy === 'from' ? { className: selected } : {})}
+                {...(sortBy === 'from' ? { className: classes.selected } : {})}
               >
                 From {sortBy === 'from' ? sortArrow : null}
               </th>
               <th
                 className={classes.toRow}
                 onClick={onSortBy('to')}
-                {...(sortBy === 'to' ? { className: selected } : {})}
+                {...(sortBy === 'to' ? { className: classes.selected } : {})}
               >
                 To {sortBy === 'to' ? sortArrow : null}
               </th>
               <th
                 className={classes.subjectRow}
                 onClick={onSortBy('subject')}
-                {...(sortBy === 'subject' ? { className: selected } : {})}
+                {...(sortBy === 'subject' ? { className: classes.selected } : {})}
               >
                 Subject {sortBy === 'subject' ? sortArrow : null}
               </th>
               <th
                 className={classes.dateRow}
                 onClick={onSortBy('date')}
-                {...(sortBy === 'date' ? { className: selected } : {})}
+                {...(sortBy === 'date' ? { className: classes.selected } : {})}
               >
                 Date {sortBy === 'date' ? sortArrow : null}
               </th>
@@ -135,21 +114,26 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
             {(mails as Array<MailObj>).map((el: MailObj, index: number) => (
               <React.Fragment key={`mailTableRow${index}`}>
                 <tr onClick={onShowBody(index)}>
-                  <MailIcon className={mailIcon} />
-                  <td className={[fromCell, classes.fromRow].join(' ')}>{el.from}</td>
-                  <td className={[toCell, classes.toRow].join(' ')}>{el.to.join(', ')}</td>
-                  <td className={[subjectCell, classes.subjectRow].join(' ')}>
+                  <MailIcon className={classes.mailIcon} />
+                  <td className={[classes.fromCell, classes.fromRow].join(' ')}>{el.from}</td>
+                  <td className={[classes.toCell, classes.toRow].join(' ')}>{el.to.join(', ')}</td>
+                  <td className={[classes.subjectCell, classes.subjectRow].join(' ')}>
                     <div className={classes.subjectText}>{el.subject}</div>
-                    {el.hasAttachment ? <AttachIcon className={attachIcon} /> : null}
+                    {el.hasAttachment ? <AttachIcon className={classes.attachIcon} /> : null}
                   </td>
-                  <td className={[dateCell, classes.dateRow].join(' ')}>
+                  <td className={[classes.dateCell, classes.dateRow].join(' ')}>
                     <div>
                       <DateCell date={el.date} />
                     </div>
-                    <ArrowNextIcon className={nextIcon} />
+                    <ArrowNextIcon className={classes.nextIcon} />
                   </td>
                 </tr>
-                <tr className={[bodyText, ...(showBody[index] ? [showBodyText] : [])].join(' ')}>
+                <tr
+                  className={[
+                    classes.bodyText,
+                    ...(showBody[index] ? [classes.showBodyText] : [])
+                  ].join(' ')}
+                >
                   <td colSpan={4}>
                     <ShowTemporaryBody />
                   </td>
@@ -159,8 +143,8 @@ const MailTable: React.SFC<MailTableProps> = (props) => {
           </tbody>
         </table>
       ) : (
-        <div className={emptyMails}>
-          <img className={logoClass} src={logoImg} alt='logo' />
+        <div className={classes.emptyMails}>
+          <img className={classes.logoClass} src={logoImg} alt='logo' />
         </div>
       )}
     </div>

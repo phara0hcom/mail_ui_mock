@@ -9,7 +9,7 @@ function App() {
   return (
     <div className='App'>
       <header className='section sectionWithP'>
-        <DateSearchBar section='left' />
+        <DateSearchBar />
       </header>
       <section className='sectionMail'>
         <MailTable mails={mockMails()} />
